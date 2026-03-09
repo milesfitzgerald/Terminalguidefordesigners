@@ -1,6 +1,6 @@
 # Terminal Guide for Designers
 
-A practical, no-nonsense guide to using the Mac Terminal — written for designers, not developers.
+A practical, no-nonsense guide to using the Mac Terminal — written for designers
 
 **Live site:** [milesfitzgerald.github.io/Terminalguidefordesigners](https://milesfitzgerald.github.io/Terminalguidefordesigners)
 
@@ -12,10 +12,6 @@ A practical, no-nonsense guide to using the Mac Terminal — written for designe
 - Git basics for version control
 - Installing tools with Homebrew
 - Customizing your terminal
-
-## Design
-
-Custom-built layout inspired by Dieter Rams' principles of simplicity. No theme, no framework — just clean Helvetica Neue typography, generous whitespace, and dark mode.
 
 ## Built with
 
