@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <style>
+    /* ------------------------------------------------
+       RESET — Start from nothing.
+       ------------------------------------------------ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ------------------------------------------------
+       FOUNDATION — Honest materials.
+       Helvetica Neue because clarity is not decoration.
+       ------------------------------------------------ */
+    :root {
+      --text:    #1a1a1a;
+      --text-2:  #6e6e6e;
+      --surface: #ffffff;
+      --subtle:  #f2f2f2;
+      --border:  #e0e0e0;
+      --code-bg: #f7f7f7;
+      --mono:    "SF Mono", "Menlo", "Monaco", "Consolas", monospace;
+      --sans:    "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+      --measure: 42rem;
+    }
+
+    html {
+      font-size: 17px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--surface);
+      line-height: 1.7;
+      padding: 0 1.5rem;
+    }
+
+    /* ------------------------------------------------
+       LAYOUT — A single, centered column.
+       Nothing competes for attention.
+       ------------------------------------------------ */
+    .page {
+      max-width: var(--measure);
+      margin: 0 auto;
+      padding: 6rem 0 8rem;
+    }
+
+    /* ------------------------------------------------
+       HEADER — State the purpose, then step aside.
+       ------------------------------------------------ */
+    .page-header {
+      margin-bottom: 5rem;
+    }
+
+    .page-header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .page-header .lede {
+      font-size: 1.15rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 36rem;
+    }
+
+    /* ------------------------------------------------
+       TABLE OF CONTENTS — A systematic index.
+       Numbered, quiet, functional.
+       ------------------------------------------------ */
+    .toc {
+      margin-bottom: 5rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 1.2rem;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      columns: 2;
+      column-gap: 2rem;
+    }
+
+    .toc li {
+      counter-increment: toc;
+      break-inside: avoid;
+      margin-bottom: 0.45rem;
+    }
+
+    .toc li a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      transition: color 0.15s;
+    }
+
+    .toc li a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .toc li a:hover {
+      color: var(--text-2);
+    }
+
+    /* ------------------------------------------------
+       TYPOGRAPHY — Hierarchy through size and weight.
+       No color tricks. No decoration.
+       ------------------------------------------------ */
+    .content h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-top: 5rem;
+      margin-bottom: 0.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .content h2:first-child {
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .content h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .content p {
+      margin-bottom: 1.25rem;
+    }
+
+    .content strong {
+      font-weight: 600;
+    }
+
+    .content em {
+      font-style: italic;
+    }
+
+    .content a {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      transition: color 0.15s;
+    }
+
+    .content a:hover {
+      color: var(--text-2);
+    }
+
+    /* ------------------------------------------------
+       LISTS — Clean, aligned, purposeful.
+       ------------------------------------------------ */
+    .content ul,
+    .content ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.25rem;
+    }
+
+    .content li {
+      margin-bottom: 0.35rem;
+    }
+
+    .content li::marker {
+      color: var(--text-2);
+    }
+
+    /* ------------------------------------------------
+       CODE — Technical precision.
+       A quiet container that lets the command speak.
+       ------------------------------------------------ */
+    .content code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--code-bg);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+    }
+
+    .content pre {
+      background: var(--code-bg);
+      border-left: 2px solid var(--text);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .content pre code {
+      background: none;
+      padding: 0;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      border-radius: 0;
+    }
+
+    /* ------------------------------------------------
+       TABLES — Information design.
+       Minimal rules. Let the data breathe.
+       ------------------------------------------------ */
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.92rem;
+    }
+
+    .content thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      padding: 0 0 0.6rem 0;
+      border-bottom: 1px solid var(--text);
+    }
+
+    .content tbody td {
+      padding: 0.6rem 1rem 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .content tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ------------------------------------------------
+       CALLOUTS — Honest warnings.
+       ------------------------------------------------ */
+    .content blockquote {
+      border-left: 2px solid var(--text-2);
+      padding-left: 1.25rem;
+      color: var(--text-2);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    /* ------------------------------------------------
+       HORIZONTAL RULES — Whitespace, not lines.
+       ------------------------------------------------ */
+    .content hr {
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ------------------------------------------------
+       FOOTER — Quietly present.
+       ------------------------------------------------ */
+    .page-footer {
+      margin-top: 6rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-2);
+    }
+
+    /* ------------------------------------------------
+       RESPONSIVE — Adapt, don't compromise.
+       ------------------------------------------------ */
+    @media (max-width: 640px) {
+      html {
+        font-size: 16px;
+      }
+
+      .page {
+        padding: 3.5rem 0 5rem;
+      }
+
+      .page-header {
+        margin-bottom: 3.5rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .toc {
+        margin-bottom: 3.5rem;
+      }
+
+      .toc ol {
+        columns: 1;
+      }
+
+      .content h2 {
+        margin-top: 3.5rem;
+        font-size: 1.3rem;
+      }
+
+      .content pre {
+        padding: 1rem 1.15rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 0;
+      }
+
+      .content table {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    {{ content }}
+  </main>
+</body>
+</html>
